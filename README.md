@@ -1,5 +1,5 @@
 
-# AFTERDARK Website (Final Working)
+# AFTERDARK Website (Fixed)
 
 ## Run locally
 npm install
