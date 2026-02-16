@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function AfterdarkHomepage() {
   useEffect(() => {
@@ -40,6 +41,21 @@ export default function AfterdarkHomepage() {
 
   return (
     <main style={{ minHeight: '100vh', background: 'black', color: 'white', fontFamily: 'sans-serif' }}>
+      {/* Navigation */}
+      <nav style={{ position: 'fixed', top: 0, left: 0, width: '100%', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(6px)', borderBottom: '1px solid rgba(255,255,255,0.1)', zIndex: 50 }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Link href="/" style={{ letterSpacing: '0.3em', fontSize: 14 }}>
+            AFTERDARK
+          </Link>
+
+          <div style={{ display: 'flex', gap: 24, fontSize: 12, letterSpacing: '0.15em' }}>
+            <Link href="/protein">PROTEIN</Link>
+            <Link href="/performance">PERFORMANCE</Link>
+            <Link href="/skincare">SKINCARE</Link>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero */}
       <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', textAlign: 'center', padding: '0 24px' }}>
         <div>
@@ -49,12 +65,22 @@ export default function AfterdarkHomepage() {
           <p style={{ marginTop: '24px', fontSize: '18px', color: '#9ca3af', letterSpacing: '0.2em' }}>
             BUILT AFTER DARK.
           </p>
+
+          {/* Call to Action */}
+          <div style={{ marginTop: 40 }}>
+            <Link
+              href="/protein"
+              style={{ padding: '12px 28px', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 999, fontSize: 12, letterSpacing: '0.15em' }}
+            >
+              SHOP PROTEIN
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Buy Button Section */}
-      <section style={{ padding: '96px 0', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '28px', marginBottom: '40px' }}>Shop Whey Protein</h2>
+      {/* Featured Product Buy Button */}
+      <section style={{ padding: '80px 0', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '28px', marginBottom: '40px' }}>Featured Whey Protein</h2>
         <div id="product-component-1771231113230" style={{ display: 'flex', justifyContent: 'center' }} />
       </section>
 
