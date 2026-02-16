@@ -1,64 +1,59 @@
-import Link from "next/link";
+import { useEffect } from "react";
 
 export default function ProteinPage() {
+  useEffect(() => {
+    const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+    function loadScript() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      document.body.appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
+
+    function ShopifyBuyInit() {
+      const client = window.ShopifyBuy.buildClient({
+        domain: 'et1htc-1n.myshopify.com',
+        storefrontAccessToken: '1775a4b549ead702f7f831cc95b3f176',
+      });
+
+      window.ShopifyBuy.UI.onReady(client).then(function (ui) {
+        ui.createComponent('product', {
+          id: '10235279507773',
+          node: document.getElementById('coffee-tea-buy-button'),
+          moneyFormat: '%24%7B%7Bamount%7D%7D',
+        });
+      });
+    }
+
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) {
+        ShopifyBuyInit();
+      } else {
+        loadScript();
+      }
+    } else {
+      loadScript();
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black text-white px-6 py-20">
+    <div style={{ minHeight: '100vh', background: 'black', color: 'white', padding: '80px 24px' }}>
       {/* Hero */}
-      <section className="max-w-6xl mx-auto text-center mb-20">
-        <h1 className="text-5xl md:text-7xl tracking-[0.25em] font-light">
+      <section style={{ maxWidth: 1100, margin: '0 auto 80px', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '56px', letterSpacing: '0.25em', fontWeight: 300 }}>
           PROTEIN
         </h1>
-        <p className="mt-6 text-gray-400 max-w-xl mx-auto">
-          Premium recovery formulations engineered for strength, repair, and
-          performance after dark.
+        <p style={{ marginTop: 24, color: '#9ca3af', maxWidth: 520, marginInline: 'auto' }}>
+          Premium recovery formulations engineered for strength, repair, and performance after dark.
         </p>
       </section>
 
-      {/* Featured Product */}
-      <section className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center mb-24">
-        <div className="aspect-square bg-white/5 rounded-2xl" />
-
-        <div>
-          <h2 className="text-3xl mb-4">Whey Protein Concentrate</h2>
-          <p className="text-gray-400 mb-6">
-            Smooth texture, refined flavour, and precise recovery support for
-            serious training.
-          </p>
-
-          <Link
-            href="/"
-            className="inline-block px-8 py-3 border border-white/20 rounded-full hover:bg-white hover:text-black transition"
-          >
-            Shop Now
-          </Link>
-        </div>
-      </section>
-
-      {/* Product Grid */}
-      <section className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {[
-          "Performance Whey",
-          "Coffee & Tea Whey",
-          "Whey Isolate",
-          "Protein Custard",
-        ].map((item) => (
-          <div
-            key={item}
-            className="border border-white/10 rounded-2xl p-8 hover:border-white/30 transition"
-          >
-            <div className="aspect-square bg-white/5 rounded-xl mb-6" />
-            <h3 className="text-xl mb-2">{item}</h3>
-            <p className="text-gray-500 text-sm mb-4">
-              Explore the AFTERDARK {item.toLowerCase()} range.
-            </p>
-            <Link
-              href="/"
-              className="text-sm tracking-widest hover:text-gray-300"
-            >
-              VIEW
-            </Link>
-          </div>
-        ))}
+      {/* Coffee & Tea Buy Button */}
+      <section style={{ textAlign: 'center', marginTop: 60 }}>
+        <h2 style={{ fontSize: 28, marginBottom: 30 }}>Coffee & Tea Collection</h2>
+        <div id="coffee-tea-buy-button" style={{ display: 'flex', justifyContent: 'center' }} />
       </section>
     </div>
   );
