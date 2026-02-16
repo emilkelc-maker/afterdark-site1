@@ -1,83 +1,67 @@
-import { motion } from "framer-motion";
+"use client";
 
-export default function Home() {
+import { useEffect } from "react";
+
+export default function AfterdarkHomepage() {
+  useEffect(() => {
+    const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+    function loadScript() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      document.body.appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
+
+    function ShopifyBuyInit() {
+      const client = (window as any).ShopifyBuy.buildClient({
+        domain: 'et1htc-1n.myshopify.com',
+        storefrontAccessToken: '1775a4b549ead702f7f831cc95b3f176',
+      });
+
+      (window as any).ShopifyBuy.UI.onReady(client).then((ui: any) => {
+        ui.createComponent('product', {
+          id: '10235278197053',
+          node: document.getElementById('product-component-1771231113230'),
+          moneyFormat: '%24%7B%7Bamount%7D%7D',
+        });
+      });
+    }
+
+    if ((window as any).ShopifyBuy) {
+      if ((window as any).ShopifyBuy.UI) {
+        ShopifyBuyInit();
+      } else {
+        loadScript();
+      }
+    } else {
+      loadScript();
+    }
+  }, []);
+
   return (
-    <main style={{ minHeight: "100vh", background: "black", color: "white", fontFamily: "sans-serif" }}>
+    <main className="min-h-screen bg-black text-white">
       {/* Hero */}
-      <section style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", textAlign: "center", padding: "40px", position: "relative" }}>
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to bottom, #020617, black, black)",
-          opacity: 0.9
-        }} />
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          style={{ position: "relative", zIndex: 10 }}
-        >
-          <h1 style={{ fontSize: "64px", letterSpacing: "0.25em", fontWeight: 300 }}>
+      <section className="flex items-center justify-center min-h-screen text-center px-6">
+        <div>
+          <h1 className="text-6xl md:text-8xl tracking-[0.25em] font-light">
             AFTERDARK
           </h1>
-          <p style={{ marginTop: "24px", fontSize: "20px", color: "#9ca3af", letterSpacing: "0.2em" }}>
+          <p className="mt-6 text-lg md:text-xl text-gray-400 tracking-[0.2em]">
             BUILT AFTER DARK.
           </p>
-        </motion.div>
-      </section>
-
-      {/* Brand Philosophy */}
-      <section style={{ maxWidth: "800px", margin: "0 auto", padding: "96px 24px", textAlign: "center" }}>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          style={{ fontSize: "24px", color: "#d1d5db", lineHeight: 1.6 }}
-        >
-          AFTERDARK is engineered for those who train, recover, and perform
-          when the world slows down. Precision formulations. Premium
-          ingredients. A new standard in night-time performance nutrition.
-        </motion.p>
-      </section>
-
-      {/* Product Pillars */}
-      <section style={{ padding: "0 24px 128px" }}>
-        <div style={{
-          display: "grid",
-          gap: "40px",
-          maxWidth: "1100px",
-          margin: "0 auto",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))"
-        }}>
-          {[
-            "Whey Protein Concentrate",
-            "Whey Protein Isolate",
-            "Casein Custard",
-          ].map((product) => (
-            <div
-              key={product}
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "16px",
-                padding: "40px",
-                textAlign: "center"
-              }}
-            >
-              <h3 style={{ fontSize: "20px" }}>{product}</h3>
-              <p style={{ marginTop: "16px", color: "#9ca3af", fontSize: "14px" }}>
-                Premium performance formulation designed for recovery,
-                strength, and night-time optimisation.
-              </p>
-            </div>
-          ))}
         </div>
       </section>
 
+      {/* Buy Button Section */}
+      <section className="py-24 text-center">
+        <h2 className="text-3xl mb-10">Shop Whey Protein</h2>
+        <div id="product-component-1771231113230" className="flex justify-center" />
+      </section>
+
       {/* Footer */}
-      <footer style={{ textAlign: "center", color: "#6b7280", fontSize: "14px", paddingBottom: "40px" }}>
+      <footer className="text-center text-gray-500 text-sm pb-10">
         © {new Date().getFullYear()} AFTERDARK. All rights reserved.
       </footer>
     </main>
