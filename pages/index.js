@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 
 export default function AfterdarkHomepage() {
@@ -15,12 +13,12 @@ export default function AfterdarkHomepage() {
     }
 
     function ShopifyBuyInit() {
-      const client = (window as any).ShopifyBuy.buildClient({
+      const client = window.ShopifyBuy.buildClient({
         domain: 'et1htc-1n.myshopify.com',
         storefrontAccessToken: '1775a4b549ead702f7f831cc95b3f176',
       });
 
-      (window as any).ShopifyBuy.UI.onReady(client).then((ui: any) => {
+      window.ShopifyBuy.UI.onReady(client).then(function (ui) {
         ui.createComponent('product', {
           id: '10235278197053',
           node: document.getElementById('product-component-1771231113230'),
@@ -29,8 +27,8 @@ export default function AfterdarkHomepage() {
       });
     }
 
-    if ((window as any).ShopifyBuy) {
-      if ((window as any).ShopifyBuy.UI) {
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) {
         ShopifyBuyInit();
       } else {
         loadScript();
@@ -41,27 +39,27 @@ export default function AfterdarkHomepage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main style={{ minHeight: '100vh', background: 'black', color: 'white', fontFamily: 'sans-serif' }}>
       {/* Hero */}
-      <section className="flex items-center justify-center min-h-screen text-center px-6">
+      <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', textAlign: 'center', padding: '0 24px' }}>
         <div>
-          <h1 className="text-6xl md:text-8xl tracking-[0.25em] font-light">
+          <h1 style={{ fontSize: '64px', letterSpacing: '0.25em', fontWeight: 300 }}>
             AFTERDARK
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-gray-400 tracking-[0.2em]">
+          <p style={{ marginTop: '24px', fontSize: '18px', color: '#9ca3af', letterSpacing: '0.2em' }}>
             BUILT AFTER DARK.
           </p>
         </div>
       </section>
 
       {/* Buy Button Section */}
-      <section className="py-24 text-center">
-        <h2 className="text-3xl mb-10">Shop Whey Protein</h2>
-        <div id="product-component-1771231113230" className="flex justify-center" />
+      <section style={{ padding: '96px 0', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '28px', marginBottom: '40px' }}>Shop Whey Protein</h2>
+        <div id="product-component-1771231113230" style={{ display: 'flex', justifyContent: 'center' }} />
       </section>
 
       {/* Footer */}
-      <footer className="text-center text-gray-500 text-sm pb-10">
+      <footer style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', paddingBottom: '40px' }}>
         © {new Date().getFullYear()} AFTERDARK. All rights reserved.
       </footer>
     </main>
